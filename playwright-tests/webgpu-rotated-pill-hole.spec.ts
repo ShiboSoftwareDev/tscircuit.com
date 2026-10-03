@@ -42,7 +42,7 @@ const rotatedPillHoleCircuitJson = [
   },
 ]
 
-test("reproduces WebGPU failure for rotated pill holes with rectangular pads", async ({
+test("renders rotated pill holes with rectangular pads in WebGPU", async ({
   page,
 }) => {
   await page.route("**/package_releases/get_preview_circuit_json**", (route) =>
@@ -58,10 +58,8 @@ test("reproduces WebGPU failure for rotated pill holes with rectangular pads", a
 
   await page.goto("http://127.0.0.1:5177/testuser/my-test-board#pcb")
 
-  await expect(page.getByText("WebGPU rendering failed")).toBeVisible()
-  await expect(
-    page.getByText(
-      /Unsupported WebGPU geometry: pcb_plated_hole: Error: Unsupported shape: rotated_pill_hole_with_rect_pad/,
-    ),
-  ).toBeVisible()
+  await expect(page.getByText(/@tscircuit\/pcb-viewer@/)).toBeVisible()
+  await expect(page.locator("canvas").first()).toBeVisible()
+  await page.waitForTimeout(500)
+  await expect(page.getByText("WebGPU rendering failed")).toHaveCount(0)
 })
