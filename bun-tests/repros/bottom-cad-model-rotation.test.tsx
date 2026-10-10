@@ -104,11 +104,8 @@ test("bottom CAD rotation repro creates a CAD component", () => {
   expect(renderRepro()).toBeDefined()
 })
 
-test.failing(
-  "bottom CAD rotation subtracts the PCB rotation from the model offset",
-  () => {
-    const cadComponent = renderRepro()
+test("bottom CAD rotation subtracts the PCB rotation from the model offset", () => {
+  const cadComponent = renderRepro()
 
-    expect(cadComponent?.rotation).toEqual({ x: 0, y: 180, z: 0 })
-  },
-)
+  expect(cadComponent?.rotation).toEqual({ x: 0, y: 180, z: 0 })
+})
